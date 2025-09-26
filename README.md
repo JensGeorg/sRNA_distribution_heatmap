@@ -20,7 +20,7 @@ To run the app with the data from the paper (XXX), where a library of 893 expres
 
 ```R
     shiny::runApp("app.R")
-    ```
+```
 
 
 ## Data Preparation (`prepare_data.R`)
