@@ -16,7 +16,7 @@ The goal of this project is to take sRNA homolog data from multiple FASTA files 
 
 ## Run app with precomputed data 
 
-To run the app with the data from the paper (XXX), where a library of 893 expressed RNA fragments was generated use the included **heatdata.Rdata** from this repo. Put the **app.R** and **heatdata.Rdata** together in a folder and run the app in R studio.
+To run the app with the data from the paper (XXX), where a library of 893 expressed RNA fragments was generated use the included **heatdata.Rdata** from this repo. Put the **app.R** and **heatdata.Rdata** together in a folder and run the app in R studio. The prerequisites to run the app are explained below.
 
 ```R
     shiny::runApp("app.R")
