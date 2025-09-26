@@ -127,11 +127,12 @@ for (fasta_path in files_to_process) {
   
   # Process taxonkit output
   for (line in taxonkit_output) {
+
     parts <- strsplit(line, "\t")[[1]]
     taxid <- parts[1]
     
     # Get all accessions for the current taxid
-    accessions <- coordinates_data$Accession_number[grep(paste0("taxID:", taxid, " "), coordinates_data$Full_header)]
+    accessions <- coordinates_data$Accession_number[grep(paste0("taxID:", taxid, ""), coordinates_data$Full_header)]
     accessions <- gsub("\\..*", "", accessions)
     
     for (acc in accessions) {
@@ -199,9 +200,9 @@ for (fasta_path in files_to_process) {
   accessions <- gsub("\\..*", "", coordinates_data$Accession_number)
   taxonomy_matches <- match(accessions, rownames(taxonomy_matrix))
   
-  combined_data <- cbind(coordinates_data, taxonomy_matrix[taxonomy_matches, ])
-  
-  dir_name <- gsub("./", "", dir_path)
+  combined_data <- cbind(coordinates_data[,c("Accession_number","identity")], taxonomy_matrix[taxonomy_matches, ])
+  colnames(combined_data)[c(1,2)]<-c("Accession_number","identity")
+  dir_name <- gsub(".fasta|fa", "", fasta_file_path)
   all_coordinates_list[[dir_name]] <- combined_data
 }
 
@@ -213,11 +214,16 @@ for (i in 1:length(all_coordinates_list)) {
   for (j in 1:nrow(all_coordinates_list[[i]])) {
     accession <- all_coordinates_list[[i]][j, "Accession_number"]
     if (is.null(tax_table_list[[accession]])) {
-      tax_table_list[[accession]] <- all_coordinates_list[[i]][j, 10:19]
+      tax_table_list[[accession]] <- all_coordinates_list[[i]][j, 2:11]
     }
   }
 }
 consolidated_tax_table <- do.call("rbind", tax_table_list)
+
+# reduce data size
+for (i in 1:length(all_coordinates_list)) {
+	all_coordinates_list[[i]]<-all_coordinates_list[[i]][,1:2]
+}
 
 # Save the final data object for the Shiny app
 heatdata <- list(consolidated_tax_table, all_coordinates_list)

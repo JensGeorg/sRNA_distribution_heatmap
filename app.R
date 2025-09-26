@@ -10,7 +10,6 @@ library(circlize)
 load("heatdata.Rdata")
 tax_table <- heatdata[[1]]
 coor_all <- heatdata[[2]]
-anno2 <- heatdata[[3]]
 
 # Default organism file
 default_organism_file <- "salmonella_all.txt"
@@ -580,8 +579,10 @@ server <- function(input, output, session) {
       iden <- which(as.numeric(tmp[, "identity"]) >= input$identity)
       
       if (length(iden) > 0) {
-        tmp <- tmp[iden, 10:19]
-        pos <- table(tmp)
+		tmp<-tmp[iden,"Accession_number"]
+		tmp<-match(tmp, rownames(tax_table))
+        tmp <- tax_table[tmp, 2:10]
+        pos <- table( unlist(unname(tmp)))
         pos2 <- match(names(pos), colnames(heat_data))
         if (length(na.omit(pos2)) > 0) {
           pos3 <- which(!is.na(pos2))
