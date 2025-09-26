@@ -21,8 +21,8 @@ This script is the first step in the workflow. It needs to be run once to proces
 
 * **R**: Make sure you have R installed.
 * **taxonkit**: This is a command-line tool required for fetching taxonomy data. It needs to be installed and accessible in your system's PATH. You can find installation instructions [here](https://bioinf.shenwei.me/taxonkit/usage/).
-* **GlASSgo fasta files**: The fasta headers need to contain all required information e.g. **taxID**, **percent identitity** to reference sRNA or **genome accession** as provided by GLASSgo
-** >CP010281.1:c2139966-2139810 Salmonella enterica subsp. enterica serovar Newport str. CVM 22513, complete genome-p.c.VAL:99.36%-taxID:796732
+* **GLASSgo fasta files**: The fasta headers need to contain all required information e.g. **taxID**, **percent identitity** to reference sRNA or **genome accession** as provided by GLASSgo
+    ** >CP010281.1:c2139966-2139810 Salmonella enterica subsp. enterica serovar Newport str. CVM 22513, complete genome-p.c.VAL:99.36%-taxID:796732
 
 ### How to Run
 
