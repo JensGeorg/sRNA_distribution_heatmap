@@ -87,15 +87,15 @@ process_fasta_file <- function(file_content) {
 
 # --- 2. Fetch Taxonomic Data ---
 
-# Get a list of directories containing FASTA files
-all_dirs <- list.dirs(recursive = FALSE)
-dirs_to_process <- all_dirs[!grepl("Temp_dir|tmp", all_dirs)]
+# Get a list of FASTA files in the working directory
+files<-dir()
+files_to_process<-files[grepl("\\.fasta$|\\.fa$", files)]
 
 taxid_lookup <- new.env(hash = TRUE)
 processed_taxids <- c()
 
-for (dir_path in dirs_to_process) {
-  fasta_file_path <- file.path(dir_path, "_Network.fasta")
+for (fasta_path in files_to_process) {
+  fasta_file_path <- fasta_path
   
   if (!file.exists(fasta_file_path)) {
     next
@@ -181,8 +181,8 @@ for (acc in accession_names) {
 
 all_coordinates_list <- list()
 
-for (dir_path in dirs_to_process) {
-  fasta_file_path <- file.path(dir_path, "_Network.fasta")
+for (fasta_path in files_to_process) {
+  fasta_file_path <- fasta_path
   
   if (!file.exists(fasta_file_path)) {
     next
@@ -223,8 +223,3 @@ consolidated_tax_table <- do.call("rbind", tax_table_list)
 heatdata <- list(consolidated_tax_table, all_coordinates_list)
 save(heatdata, file = "heatdata.Rdata")
 
-# Write out the names of the processed sRNA clusters
-sRNA_names <- gsub("./", "", dirs_to_process)
-writeLines(sRNA_names, con = "all_sRNAs.txt")
-
-cat("Data preparation complete. 'heatdata.Rdata' is ready for the Shiny app.\n")
