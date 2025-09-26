@@ -41,7 +41,7 @@ ui <- dashboardPage(
           solidHeader = TRUE,
           width = 12, 
           collapsible = TRUE,
-
+          
           textInput(
             "include", 
             "Included sRNA clusters (comma-separated):", 
@@ -68,8 +68,8 @@ ui <- dashboardPage(
             style = "margin-bottom: 15px;"
           ),
           
-            # Item 3: The Help Text
-            
+          # Item 3: The Help Text
+          
           #),
           #--- 2. Conditional File Upload ---#
           conditionalPanel(
@@ -215,6 +215,11 @@ ui <- dashboardPage(
                      tags$label("Cluster columns:", class = "control-label", style = "display: block; font-weight: bold; margin-bottom: 5px;"),
                      checkboxInput("cluster_col", NULL, value = TRUE),
                      style = "margin-bottom: 15px;"
+                   ),
+                   div(
+                     tags$label("Draw cell borders:", class = "control-label", style = "display: block; font-weight: bold; margin-bottom: 5px;"),
+                     checkboxInput("draw_lines", NULL, value = FALSE),
+                     style = "margin-bottom: 15px;"
                    )
             )
           ),
@@ -272,7 +277,7 @@ ui <- dashboardPage(
                      tags$label("Color 1:", class = "control-label", style = "display: block; font-weight: bold; margin-bottom: 5px;"),
                      colourInput("color1", NULL, value = "#FFFFFF", 
                                  palette = "square", showColour = "both"),
-                                      style = "margin-bottom: 10px;"
+                     style = "margin-bottom: 10px;"
                    )
             )
           ),
@@ -579,8 +584,8 @@ server <- function(input, output, session) {
       iden <- which(as.numeric(tmp[, "identity"]) >= input$identity)
       
       if (length(iden) > 0) {
-		tmp<-tmp[iden,"Accession_number"]
-		tmp<-match(tmp, rownames(tax_table))
+        tmp<-tmp[iden,"Accession_number"]
+        tmp<-match(tmp, rownames(tax_table))
         tmp <- tax_table[tmp, 2:10]
         pos <- table( unlist(unname(tmp)))
         pos2 <- match(names(pos), colnames(heat_data))
@@ -631,6 +636,7 @@ server <- function(input, output, session) {
       cluster_columns = input$cluster_col,
       row_names_gp = gpar(fontsize = input$row_label_size),
       column_names_gp = gpar(fontsize = input$col_label_size),
+      rect_gp = if (input$draw_lines) gpar(col = "grey", lwd = 0.5) else gpar(col = NA),
       heatmap_legend_param = list(title = "Count")
     )
     
@@ -651,9 +657,9 @@ server <- function(input, output, session) {
       "Total data points: ", length(data), "\n",
       "Non-zero values: ", sum(data > 0), " (", round(100 * sum(data > 0) / length(data), 1), "%)\n",
       "Value range: ", min(data), " - ", max(data), "\n"
-     # "Mean value: ", round(mean(data), 2), "\n",
-     # "Median value: ", round(median(data), 2), "\n",
-     # "Standard deviation: ", round(sd(data), 2)
+      # "Mean value: ", round(mean(data), 2), "\n",
+      # "Median value: ", round(median(data), 2), "\n",
+      # "Standard deviation: ", round(sd(data), 2)
     )
   })
   
@@ -668,7 +674,8 @@ server <- function(input, output, session) {
       "Show row names: ", ifelse(input$show_row, "Yes", "No"), "\n",
       "Show column names: ", ifelse(input$show_col, "Yes", "No"), "\n",
       "Using cluster file: ", ifelse(input$use_cluster_file, "Yes", "No"), "\n",
-      "Using organism file: ", ifelse(input$use_organism_file, "Yes", "No")
+      "Using organism file: ", ifelse(input$use_organism_file, "Yes", "No"), "\n",
+      "Draw cell borders: ", ifelse(input$draw_lines, "Yes", "No")
     )
   })
   
@@ -698,6 +705,7 @@ server <- function(input, output, session) {
             show_column_names = input$show_col,
             cluster_rows = input$cluster_row,
             cluster_columns = input$cluster_col,
+            rect_gp = if (input$draw_lines) gpar(col = "grey", lwd = 0.5) else gpar(col = NA),
             row_names_gp = gpar(fontsize = input$row_label_size),
             column_names_gp = gpar(fontsize = input$col_label_size),
             heatmap_legend_param = list(title = "Count")
