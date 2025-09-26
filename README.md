@@ -14,6 +14,14 @@ The goal of this project is to take sRNA homolog data from multiple FASTA files 
 * **Interactive Visualization**: The Shiny app (`app.R`) provides a user-friendly interface to filter the data and customize the heatmap appearance.
 * **Exportable Results**: Both the generated heatmap (as a PDF) and the underlying data matrix (as a CSV) can be downloaded from the app.
 
+## Run app with precomputed data 
+
+To run the app with the data from the paper (XXX), where a library of 893 expressed RNA fragments was generated use the included **heatdata.Rdata** from this repo. Put the **app.R** and **heatdata.Rdata** together in a folder and run the app in R studio.
+
+```R
+    shiny::runApp("app.R")
+    ```
+
 
 ## Data Preparation (`prepare_data.R`)
 
