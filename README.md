@@ -2,6 +2,8 @@
 
 This project provides a workflow for visualizing the phylogenetic distribution of small RNA (sRNA) homologs. It consists of an R script to prepare the data and a Shiny web application to generate interactive heatmaps.
 
+![Screenshot of the Shiny app](./species.PNG)
+
 ## Project Overview
 
 The goal of this project is to take sRNA homolog data from multiple FASTA files produced by the GLASSgo tool, process this data to include taxonomic information, and then visualize the distribution of these homologs across different taxonomic levels in a heatmap.
