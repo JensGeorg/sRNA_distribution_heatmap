@@ -30,7 +30,7 @@ This script is the first step in the workflow. It needs to be run once to proces
 ### How to Run
 
 1.  Place the `prepare_data.R` script in the root of your project directory.
-2.  Ensure all your FASTA files (.fa, or .fasta) are available in the project directory.
+2.  Ensure all your FASTA files (.fa or .fasta) are available in the project directory.
 3.  Run the script from your R console:
     ```R
     source("prepare_data.R")
