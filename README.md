@@ -21,7 +21,7 @@ This script is the first step in the workflow. It needs to be run once to proces
 
 * **R**: Make sure you have R installed.
 * **taxonkit**: This is a command-line tool required for fetching taxonomy data. It needs to be installed and accessible in your system's PATH. You can find installation instructions [here](https://bioinf.shenwei.me/taxonkit/usage/).
-* **GLASSgo fasta files**: The fasta headers need to contain all required information e.g. **taxID**, **percent identitity** to reference sRNA or **genome accession** as provided by GLASSgo
+* **GLASSgo fasta files**: The fasta headers need to contain all required information e.g. **taxID**, **percent identitity** to reference sRNA or **genome accession** as provided by GLASSgo.
     * **Example Header:**
         ```
         >CP010281.1:c2139966-2139810 Salmonella enterica subsp. enterica serovar Newport str. CVM 22513, complete genome-p.c.VAL:99.36%-taxID:796732
@@ -30,12 +30,12 @@ This script is the first step in the workflow. It needs to be run once to proces
 ### How to Run
 
 1.  Place the `prepare_data.R` script in the root of your project directory.
-2.  Ensure your FASTA files are organized as described above.
+2.  Ensure all your FASTA files (.fa, or .fasta) are available in the project directory.
 3.  Run the script from your R console:
     ```R
     source("prepare_data.R")
     ```
-4.  The script will process the files and generate `heatdata.Rdata` and `all_sRNAs.txt`.
+4.  The script will process the files and generate `heatdata.Rdata`.
 
 ## Shiny App (`app.R`)
 
@@ -60,11 +60,7 @@ This will launch the web application in your default browser.
 
 ## Using the `example.fa` file
 
-The `example.fa` file is a sample of the expected input format for the `_Network.fasta` files. It contains FASTA entries with headers that include the necessary metadata for the `prepare_data.R` script to parse. You can use this file to understand the required format for your own data.
-
-## Contributing
-
-If you'd like to contribute to this project, please feel free to fork the repository, make your changes, and submit a pull request.
+The `example.fa` file is a sample of the expected input format for the fasta files. It contains FASTA entries with headers that include the necessary metadata for the `prepare_data.R` script to parse. You can use this file to understand the required format for your own data.
 
 ## References
 
